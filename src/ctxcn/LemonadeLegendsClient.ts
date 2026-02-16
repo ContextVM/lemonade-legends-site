@@ -28,7 +28,7 @@ export type LemonadeLegends = {
 };
 
 export class LemonadeLegendsClient implements LemonadeLegends {
-  static readonly SERVER_PUBKEY = "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798";
+  static readonly SERVER_PUBKEY = "fde21351fbc8604c27dcff3d507f8e9b15438f3bd04093ca3fd57cd6b36c58d0";
   static readonly DEFAULT_RELAYS = defaultRelays;
   private client: Client;
   private transport: Transport;

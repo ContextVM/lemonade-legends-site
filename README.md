@@ -1,22 +1,9 @@
-# sv
+# Lemonade Legends
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+## Repositories
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
-
-```sh
-# recreate this project
-bun x sv create --template minimal --types ts --add prettier tailwindcss="plugins:none" --install bun lemonade-legends-site
-```
+- **Server**: [https://github.com/ContextVM/lemonade-legends](https://github.com/ContextVM/lemonade-legends)
+- **Web Client**: [https://github.com/ContextVM/lemonade-legends-site](https://github.com/ContextVM/lemonade-legends-site)
 
 ## Developing
 

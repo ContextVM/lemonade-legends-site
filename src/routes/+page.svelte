@@ -125,7 +125,7 @@
 			</p>
 			<p class="text-sm">
 				Read the full story on the <a href="https://contextvm.org/blog/lemonade-legends" target="_blank" rel="noreferrer" class="underline hover:text-foreground">blog</a>.
-				Everything is open source—check out the <a href="https://github.com/contextvm/ll" target="_blank" rel="noreferrer" class="underline hover:text-foreground">server</a> and <a href="https://github.com/contextvm/ll-site" target="_blank" rel="noreferrer" class="underline hover:text-foreground">this site</a> on GitHub.
+				Everything is open source—check out the <a href="https://github.com/ContextVM/lemonade-legends" target="_blank" rel="noreferrer" class="underline hover:text-foreground">server</a> and <a href="https://github.com/ContextVM/lemonade-legends-site" target="_blank" rel="noreferrer" class="underline hover:text-foreground">this site</a> on GitHub.
 			</p>
 		</div>
 	</section>
