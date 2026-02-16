@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.625rem;
+  /* Lemonade theme primitives */
+  --lemon-1: oklch(0.985 0.045 96);
+  --lemon-2: oklch(0.965 0.09 96);
+  --mint-1: oklch(0.965 0.06 160);
+  --mint-2: oklch(0.94 0.09 155);
+  --leaf: oklch(0.62 0.16 155);
+
+  /* Night lemonade accents (used mostly by gradients in dark mode) */
+  --berry: oklch(0.55 0.22 310);
+  --sky: oklch(0.58 0.18 235);
+  --tea: oklch(0.48 0.16 70);
+  --honey: oklch(0.65 0.2 55);
+  --citrus: oklch(0.6 0.2 100);
+
+  /* Base surfaces */
+  --background: oklch(0.995 0.01 98);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+
+  /* Brand colors (used by shadcn tokens) */
+  --primary: oklch(0.86 0.16 96);
+  --primary-foreground: oklch(0.18 0.03 98);
+  --secondary: oklch(0.965 0.03 96);
+  --secondary-foreground: oklch(0.22 0.05 160);
+  --muted: oklch(0.975 0.02 98);
+  --muted-foreground: oklch(0.47 0.04 255);
+  --accent: oklch(0.955 0.05 160);
+  --accent-foreground: oklch(0.22 0.05 160);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.92 0.03 98);
+  --input: oklch(0.92 0.03 98);
+  --ring: oklch(0.82 0.14 96);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+.dark {
+  /* Dark lemonade (cooler, still citrus/mint) */
+  /* not-black background: deep purple-brown tea */
+  --background: oklch(0.19 0.03 320);
+  --foreground: oklch(0.985 0.01 98);
+  --card: oklch(0.22 0.03 320);
+  --card-foreground: oklch(0.985 0.01 98);
+  --popover: oklch(0.22 0.03 320);
+  --popover-foreground: oklch(0.985 0.01 98);
+  --primary: oklch(0.9 0.16 96);
+  --primary-foreground: oklch(0.22 0.03 320);
+  --secondary: oklch(0.26 0.04 320);
+  --secondary-foreground: oklch(0.985 0.01 98);
+  --muted: oklch(0.26 0.04 320);
+  --muted-foreground: oklch(0.82 0.02 98);
+  --accent: oklch(0.3 0.06 235);
+  --accent-foreground: oklch(0.985 0.01 98);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.88 0.14 96);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* Fresh lemonade wash: subtle yellow + mint gradients without harming readability */
+    background-image:
+      radial-gradient(900px 500px at 12% 12%, color-mix(in oklab, var(--lemon-2), white 55%) 0%, transparent 60%),
+      radial-gradient(900px 500px at 88% 18%, color-mix(in oklab, var(--mint-2), white 60%) 0%, transparent 62%),
+      radial-gradient(1200px 700px at 50% 100%, color-mix(in oklab, var(--lemon-1), var(--mint-1) 35%) 0%, transparent 65%);
+    background-attachment: fixed;
+  }
+
+  /* Dark mode gets its own gradient wash (purple/tea + lemonade + pale blue) */
+  :global(.dark) body {
+    background-image:
+      radial-gradient(900px 560px at 14% 18%, color-mix(in oklab, var(--berry), transparent 65%) 0%, transparent 62%),
+      radial-gradient(820px 520px at 86% 16%, color-mix(in oklab, var(--sky), transparent 72%) 0%, transparent 60%),
+      radial-gradient(1100px 720px at 50% 100%, color-mix(in oklab, var(--tea), var(--citrus) 35%) 0%, transparent 65%),
+      radial-gradient(700px 400px at 92% 85%, color-mix(in oklab, var(--honey), transparent 75%) 0%, transparent 55%);
+  }
+}
+
+@layer utilities {
+  @keyframes ll-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  @keyframes ll-sheen {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ll-anim-float,
+    .ll-anim-sheen {
+      animation: none !important;
+    }
+  }
+
+  .ll-anim-float {
+    animation: ll-float 6.5s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  /* subtle animated gradient for text */
+  .ll-anim-sheen {
+    background-size: 180% 180%;
+    animation: ll-sheen 10s ease-in-out infinite;
+  }
+}
