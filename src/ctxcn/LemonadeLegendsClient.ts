@@ -8,6 +8,7 @@ import {
 } from "@contextvm/sdk";
 import { withClientPayments } from "@contextvm/sdk/payments";
 import { createUiOnlyPaymentHandler } from "$lib/payments/payments-ui.svelte";
+import { defaultRelays } from "$lib/relay-pool";
 
 export type MintBadgeInput = Record<string, unknown>;
 
@@ -28,7 +29,7 @@ export type LemonadeLegends = {
 
 export class LemonadeLegendsClient implements LemonadeLegends {
   static readonly SERVER_PUBKEY = "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798";
-  static readonly DEFAULT_RELAYS = ["ws://localhost:10547"];
+  static readonly DEFAULT_RELAYS = defaultRelays;
   private client: Client;
   private transport: Transport;
 
