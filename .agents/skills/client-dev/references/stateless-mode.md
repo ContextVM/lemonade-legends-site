@@ -35,10 +35,10 @@ Stateless mode:
 
 ```typescript
 const transport = new NostrClientTransport({
-  signer,
-  relayHandler,
-  serverPubkey: SERVER_PUBKEY,
-  isStateless: true,
+	signer,
+	relayHandler,
+	serverPubkey: SERVER_PUBKEY,
+	isStateless: true
 });
 ```
 

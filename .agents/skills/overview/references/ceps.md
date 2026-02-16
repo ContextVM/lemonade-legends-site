@@ -77,9 +77,9 @@ Optional injection of client public key into request metadata.
 
 ```typescript
 const transport = new NostrServerTransport({
-  signer: new PrivateKeySigner(serverPrivateKey),
-  relayHandler: new ApplesauceRelayPool([relayUrl]),
-  injectClientPubkey: true, // Enable injection
+	signer: new PrivateKeySigner(serverPrivateKey),
+	relayHandler: new ApplesauceRelayPool([relayUrl]),
+	injectClientPubkey: true // Enable injection
 });
 ```
 

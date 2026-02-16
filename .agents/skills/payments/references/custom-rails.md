@@ -11,30 +11,30 @@ Both are keyed by a stable PMI string (example: `acme-checkout-v1`).
 
 ```ts
 import type {
-  PaymentProcessor,
-  PaymentProcessorCreateParams,
-  PaymentProcessorVerifyParams,
+	PaymentProcessor,
+	PaymentProcessorCreateParams,
+	PaymentProcessorVerifyParams
 } from '@contextvm/sdk/payments';
 
 export class MyRailPaymentProcessor implements PaymentProcessor {
-  public readonly pmi = 'my-rail-v1';
+	public readonly pmi = 'my-rail-v1';
 
-  public async createPaymentRequired(
-    params: PaymentProcessorCreateParams,
-  ): Promise<{ amount: number; pay_req: string; description?: string; pmi: string }> {
-    return {
-      amount: params.amount,
-      description: params.description,
-      pmi: this.pmi,
-      pay_req: JSON.stringify({ invoiceId: '...', requestEventId: params.requestEventId }),
-    };
-  }
+	public async createPaymentRequired(
+		params: PaymentProcessorCreateParams
+	): Promise<{ amount: number; pay_req: string; description?: string; pmi: string }> {
+		return {
+			amount: params.amount,
+			description: params.description,
+			pmi: this.pmi,
+			pay_req: JSON.stringify({ invoiceId: '...', requestEventId: params.requestEventId })
+		};
+	}
 
-  public async verifyPayment(
-    _params: PaymentProcessorVerifyParams,
-  ): Promise<{ _meta?: Record<string, unknown> }> {
-    return { _meta: { verifiedAt: Date.now() } };
-  }
+	public async verifyPayment(
+		_params: PaymentProcessorVerifyParams
+	): Promise<{ _meta?: Record<string, unknown> }> {
+		return { _meta: { verifiedAt: Date.now() } };
+	}
 }
 ```
 
@@ -49,16 +49,16 @@ Guidance:
 import type { PaymentHandler, PaymentHandlerRequest } from '@contextvm/sdk/payments';
 
 export class MyRailPaymentHandler implements PaymentHandler {
-  public readonly pmi = 'my-rail-v1';
+	public readonly pmi = 'my-rail-v1';
 
-  public async canHandle(_req: PaymentHandlerRequest): Promise<boolean> {
-    return true;
-  }
+	public async canHandle(_req: PaymentHandlerRequest): Promise<boolean> {
+		return true;
+	}
 
-  public async handle(req: PaymentHandlerRequest): Promise<void> {
-    const decoded = JSON.parse(req.pay_req) as { invoiceId: string };
-    await payInvoice(decoded.invoiceId);
-  }
+	public async handle(req: PaymentHandlerRequest): Promise<void> {
+		const decoded = JSON.parse(req.pay_req) as { invoiceId: string };
+		await payInvoice(decoded.invoiceId);
+	}
 }
 ```
 
@@ -68,8 +68,8 @@ Server:
 
 ```ts
 withServerPayments(transport, {
-  processors: [new MyRailPaymentProcessor()],
-  pricedCapabilities,
+	processors: [new MyRailPaymentProcessor()],
+	pricedCapabilities
 });
 ```
 
@@ -77,7 +77,6 @@ Client:
 
 ```ts
 withClientPayments(baseTransport, {
-  handlers: [new MyRailPaymentHandler()],
+	handlers: [new MyRailPaymentHandler()]
 });
 ```
-

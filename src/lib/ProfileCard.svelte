@@ -30,15 +30,14 @@
 	});
 
 	export function pubkeyToHexColor(pubkey: string): string {
-	if (!pubkey) {
-		throw new Error('Pubkey is required');
+		if (!pubkey) {
+			throw new Error('Pubkey is required');
+		}
+
+		const hexColor = pubkey.slice(0, 6);
+
+		return `#${hexColor}`;
 	}
-
-	const hexColor = pubkey.slice(0, 6);
-
-	return `#${hexColor}`;
-}
-
 </script>
 
 {#snippet pfp(pubkey: string, pfp?: string, size: 'sm' | 'md')}

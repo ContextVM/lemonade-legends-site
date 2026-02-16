@@ -75,13 +75,13 @@ ContextVM uses these Nostr event kinds:
 
 ```json
 {
-  "kind": 25910,
-  "pubkey": "<sender-public-key>",
-  "content": "{\"jsonrpc\":\"2.0\",...}",
-  "tags": [
-    ["p", "<recipient-public-key>"],
-    ["e", "<correlation-event-id>"]
-  ]
+	"kind": 25910,
+	"pubkey": "<sender-public-key>",
+	"content": "{\"jsonrpc\":\"2.0\",...}",
+	"tags": [
+		["p", "<recipient-public-key>"],
+		["e", "<correlation-event-id>"]
+	]
 }
 ```
 
@@ -119,9 +119,9 @@ For detailed specifications, see:
 
 Use this decision table to jump to the right component / skill:
 
-| Goal                                               | Recommended path                     | Skill                                                                                                            |
-| -------------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| Learn the protocol and message kinds               | Read spec + CEPs                     | [`SKILL.md`](SKILL.md) + [`references/protocol-spec.md`](references/protocol-spec.md)                            |
+| Goal                                               | Recommended path                     | Skill                                                                                        |
+| -------------------------------------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------- |
+| Learn the protocol and message kinds               | Read spec + CEPs                     | [`SKILL.md`](SKILL.md) + [`references/protocol-spec.md`](references/protocol-spec.md)        |
 | Understand core concepts, architecture, FAQs       | Concepts and architectural overview  | [`../concepts/SKILL.md`](../concepts/SKILL.md)                                               |
 | Build a new ContextVM-native server                | `McpServer` + `NostrServerTransport` | [`../server-dev/SKILL.md`](../server-dev/SKILL.md)                                           |
 | Build a new ContextVM-native client                | `Client` + `NostrClientTransport`    | [`../client-dev/SKILL.md`](../client-dev/SKILL.md)                                           |

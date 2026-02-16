@@ -10,13 +10,13 @@ You price capabilities by `method` + `name` patterns.
 import type { PricedCapability } from '@contextvm/sdk/payments';
 
 const pricedCapabilities: PricedCapability[] = [
-  {
-    method: 'tools/call',
-    name: 'add',
-    amount: 10,
-    currencyUnit: 'sats',
-    description: 'Paid demo tool',
-  },
+	{
+		method: 'tools/call',
+		name: 'add',
+		amount: 10,
+		currencyUnit: 'sats',
+		description: 'Paid demo tool'
+	}
 ];
 ```
 
@@ -27,18 +27,15 @@ Processors create `pay_req` and later verify settlement.
 Built-in Lightning rail (NWC):
 
 ```ts
-import {
-  LnBolt11NwcPaymentProcessor,
-  withServerPayments,
-} from '@contextvm/sdk/payments';
+import { LnBolt11NwcPaymentProcessor, withServerPayments } from '@contextvm/sdk/payments';
 
 const processor = new LnBolt11NwcPaymentProcessor({
-  nwcConnectionString: process.env.NWC_SERVER_CONNECTION!,
+	nwcConnectionString: process.env.NWC_SERVER_CONNECTION!
 });
 
 const paidTransport = withServerPayments(baseTransport, {
-  processors: [processor],
-  pricedCapabilities,
+	processors: [processor],
+	pricedCapabilities
 });
 ```
 
@@ -50,13 +47,13 @@ Use `resolvePrice` when the final quote depends on request parameters, client id
 import type { ResolvePriceFn } from '@contextvm/sdk/payments';
 
 const resolvePrice: ResolvePriceFn = async ({ capability, request }) => {
-  const requestSize = JSON.stringify(request.params ?? {}).length;
-  const extra = Math.ceil(requestSize / 1024);
-  return {
-    amount: Math.max(1, Math.round(capability.amount + extra)),
-    description: `Request size: ${requestSize} bytes`,
-    _meta: { requestSize },
-  };
+	const requestSize = JSON.stringify(request.params ?? {}).length;
+	const extra = Math.ceil(requestSize / 1024);
+	return {
+		amount: Math.max(1, Math.round(capability.amount + extra)),
+		description: `Request size: ${requestSize} bytes`,
+		_meta: { requestSize }
+	};
 };
 ```
 
@@ -70,11 +67,10 @@ To reject a priced request before issuing an invoice, return `{ reject: true, me
 import type { ResolvePriceFn } from '@contextvm/sdk/payments';
 
 const resolvePrice: ResolvePriceFn = async ({ capability, clientPubkey }) => {
-  const isBlocked = await isUserBlocked(clientPubkey);
-  if (isBlocked) return { reject: true, message: 'Access denied' };
-  return { amount: capability.amount };
+	const isBlocked = await isUserBlocked(clientPubkey);
+	if (isBlocked) return { reject: true, message: 'Access denied' };
+	return { amount: capability.amount };
 };
 ```
 
 The server emits `notifications/payment_rejected` correlated to the request, and the request is not forwarded.
-

@@ -9,17 +9,14 @@ A `PaymentHandler` executes payment for one PMI.
 Built-in Lightning rail (NWC):
 
 ```ts
-import {
-  LnBolt11NwcPaymentHandler,
-  withClientPayments,
-} from '@contextvm/sdk/payments';
+import { LnBolt11NwcPaymentHandler, withClientPayments } from '@contextvm/sdk/payments';
 
 const handler = new LnBolt11NwcPaymentHandler({
-  nwcConnectionString: process.env.NWC_CLIENT_CONNECTION!,
+	nwcConnectionString: process.env.NWC_CLIENT_CONNECTION!
 });
 
 const paidTransport = withClientPayments(baseTransport, {
-  handlers: [handler],
+	handlers: [handler]
 });
 ```
 
@@ -33,7 +30,7 @@ When you wrap a transport with `withClientPayments(...)`, the SDK injects `pmi` 
 
 ```ts
 const paidTransport = withClientPayments(baseTransport, {
-  handlers: [lightningHandler /*, futureHandler */],
+	handlers: [lightningHandler /*, futureHandler */]
 });
 ```
 
@@ -47,4 +44,3 @@ Recommended behavior:
 
 - treat it as a hard failure for that request id
 - surface the optional `message` to users/operators
-

@@ -21,21 +21,21 @@ All MCP messages are stringified JSON-RPC objects placed in the Nostr event's `c
 
 ```json
 {
-  "kind": 25910,
-  "content": {
-    "jsonrpc": "2.0",
-    "id": 0,
-    "method": "initialize",
-    "params": {
-      "protocolVersion": "2025-07-02",
-      "capabilities": {},
-      "clientInfo": {
-        "name": "ExampleClient",
-        "version": "1.0.0"
-      }
-    }
-  },
-  "tags": [["p", "<server-pubkey>"]]
+	"kind": 25910,
+	"content": {
+		"jsonrpc": "2.0",
+		"id": 0,
+		"method": "initialize",
+		"params": {
+			"protocolVersion": "2025-07-02",
+			"capabilities": {},
+			"clientInfo": {
+				"name": "ExampleClient",
+				"version": "1.0.0"
+			}
+		}
+	},
+	"tags": [["p", "<server-pubkey>"]]
 }
 ```
 
@@ -43,24 +43,24 @@ All MCP messages are stringified JSON-RPC objects placed in the Nostr event's `c
 
 ```json
 {
-  "kind": 25910,
-  "pubkey": "<server-pubkey>",
-  "content": {
-    "jsonrpc": "2.0",
-    "id": 0,
-    "result": {
-      "protocolVersion": "2025-07-02",
-      "capabilities": {
-        "tools": { "listChanged": true },
-        "resources": { "subscribe": true, "listChanged": true }
-      },
-      "serverInfo": {
-        "name": "ExampleServer",
-        "version": "1.0.0"
-      }
-    }
-  },
-  "tags": [["e", "<client-init-request-id>"]]
+	"kind": 25910,
+	"pubkey": "<server-pubkey>",
+	"content": {
+		"jsonrpc": "2.0",
+		"id": 0,
+		"result": {
+			"protocolVersion": "2025-07-02",
+			"capabilities": {
+				"tools": { "listChanged": true },
+				"resources": { "subscribe": true, "listChanged": true }
+			},
+			"serverInfo": {
+				"name": "ExampleServer",
+				"version": "1.0.0"
+			}
+		}
+	},
+	"tags": [["e", "<client-init-request-id>"]]
 }
 ```
 
@@ -68,12 +68,12 @@ All MCP messages are stringified JSON-RPC objects placed in the Nostr event's `c
 
 ```json
 {
-  "kind": 25910,
-  "content": {
-    "jsonrpc": "2.0",
-    "method": "notifications/initialized"
-  },
-  "tags": [["p", "<server-pubkey>"]]
+	"kind": 25910,
+	"content": {
+		"jsonrpc": "2.0",
+		"method": "notifications/initialized"
+	},
+	"tags": [["p", "<server-pubkey>"]]
 }
 ```
 
@@ -85,14 +85,14 @@ All list operations follow MCP standard structure:
 
 ```json
 {
-  "kind": 25910,
-  "content": {
-    "jsonrpc": "2.0",
-    "id": 1,
-    "method": "tools/list",
-    "params": { "cursor": "optional-cursor" }
-  },
-  "tags": [["p", "<server-pubkey>"]]
+	"kind": 25910,
+	"content": {
+		"jsonrpc": "2.0",
+		"id": 1,
+		"method": "tools/list",
+		"params": { "cursor": "optional-cursor" }
+	},
+	"tags": [["p", "<server-pubkey>"]]
 }
 ```
 
@@ -100,17 +100,17 @@ All list operations follow MCP standard structure:
 
 ```json
 {
-  "kind": 25910,
-  "content": {
-    "jsonrpc": "2.0",
-    "id": 2,
-    "method": "tools/call",
-    "params": {
-      "name": "get_weather",
-      "arguments": { "location": "New York" }
-    }
-  },
-  "tags": [["p", "<server-pubkey>"]]
+	"kind": 25910,
+	"content": {
+		"jsonrpc": "2.0",
+		"id": 2,
+		"method": "tools/call",
+		"params": {
+			"name": "get_weather",
+			"arguments": { "location": "New York" }
+		}
+	},
+	"tags": [["p", "<server-pubkey>"]]
 }
 ```
 
@@ -122,11 +122,11 @@ When encryption is enabled, messages are wrapped:
 
 ```json
 {
-  "kind": 1059,
-  "pubkey": "<random-pubkey>",
-  "created_at": "<randomized-timestamp>",
-  "tags": [["p", "<recipient-pubkey>"]],
-  "content": "<nip44-encrypted-kind-25910-event>"
+	"kind": 1059,
+	"pubkey": "<random-pubkey>",
+	"created_at": "<randomized-timestamp>",
+	"tags": [["p", "<recipient-pubkey>"]],
+	"content": "<nip44-encrypted-kind-25910-event>"
 }
 ```
 

@@ -17,7 +17,7 @@ Components:
 import { LnBolt11NwcPaymentProcessor } from '@contextvm/sdk/payments';
 
 const processor = new LnBolt11NwcPaymentProcessor({
-  nwcConnectionString: process.env.NWC_SERVER_CONNECTION!,
+	nwcConnectionString: process.env.NWC_SERVER_CONNECTION!
 });
 ```
 
@@ -29,7 +29,7 @@ The server-side NWC wallet must be able to **create invoices** and support the p
 import { LnBolt11NwcPaymentHandler } from '@contextvm/sdk/payments';
 
 const handler = new LnBolt11NwcPaymentHandler({
-  nwcConnectionString: process.env.NWC_CLIENT_CONNECTION!,
+	nwcConnectionString: process.env.NWC_CLIENT_CONNECTION!
 });
 ```
 
@@ -46,4 +46,3 @@ The client-side NWC wallet must be able to **pay invoices**.
 - `payment_required` never arrives: verify the capability is priced and the request matches `method` + `name`.
 - Payment fails: verify client wallet permissions and available balance.
 - Payment succeeds but `payment_accepted` never arrives: verify server relay connectivity and processor verification.
-

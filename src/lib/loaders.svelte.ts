@@ -1,4 +1,4 @@
-import { createAddressLoader } from 'applesauce-loaders/loaders';;
+import { createAddressLoader } from 'applesauce-loaders/loaders';
 import { relayPool } from './relay-pool';
 import { eventStore } from './eventStore';
 

@@ -4,17 +4,17 @@
 
 ```typescript
 interface NostrSigner {
-  /** Returns the public key in hex format */
-  getPublicKey(): Promise<string>;
+	/** Returns the public key in hex format */
+	getPublicKey(): Promise<string>;
 
-  /** Signs a Nostr event */
-  signEvent(event: EventTemplate): Promise<NostrEvent>;
+	/** Signs a Nostr event */
+	signEvent(event: EventTemplate): Promise<NostrEvent>;
 
-  /** Optional NIP-44 encryption support */
-  nip44?: {
-    encrypt(pubkey: string, plaintext: string): Promise<string>;
-    decrypt(pubkey: string, ciphertext: string): Promise<string>;
-  };
+	/** Optional NIP-44 encryption support */
+	nip44?: {
+		encrypt(pubkey: string, plaintext: string): Promise<string>;
+		decrypt(pubkey: string, ciphertext: string): Promise<string>;
+	};
 }
 ```
 
@@ -22,27 +22,27 @@ interface NostrSigner {
 
 ```typescript
 interface RelayHandler {
-  /** Connect to all configured relays */
-  connect(): Promise<void>;
+	/** Connect to all configured relays */
+	connect(): Promise<void>;
 
-  /** Disconnect from specified or all relays */
-  disconnect(relayUrls?: string[]): Promise<void>;
+	/** Disconnect from specified or all relays */
+	disconnect(relayUrls?: string[]): Promise<void>;
 
-  /** Publish event to all connected relays */
-  publish(event: NostrEvent): Promise<void>;
+	/** Publish event to all connected relays */
+	publish(event: NostrEvent): Promise<void>;
 
-  /**
-   * Subscribe to events matching filters.
-   * Must be non-blocking - return immediately.
-   */
-  subscribe(
-    filters: Filter[],
-    onEvent: (event: NostrEvent) => void,
-    onEose?: () => void,
-  ): Promise<void>;
+	/**
+	 * Subscribe to events matching filters.
+	 * Must be non-blocking - return immediately.
+	 */
+	subscribe(
+		filters: Filter[],
+		onEvent: (event: NostrEvent) => void,
+		onEose?: () => void
+	): Promise<void>;
 
-  /** Unsubscribe from all active subscriptions */
-  unsubscribe(): void;
+	/** Unsubscribe from all active subscriptions */
+	unsubscribe(): void;
 }
 ```
 
@@ -50,10 +50,10 @@ interface RelayHandler {
 
 ```typescript
 interface ServerInfo {
-  name?: string; // Human-readable name
-  picture?: string; // Icon URL
-  website?: string; // Website URL
-  about?: string; // Description
+	name?: string; // Human-readable name
+	picture?: string; // Icon URL
+	website?: string; // Website URL
+	about?: string; // Description
 }
 ```
 
@@ -61,10 +61,10 @@ interface ServerInfo {
 
 ```typescript
 interface BaseNostrTransportOptions {
-  signer: NostrSigner;
-  relayHandler: RelayHandler | string[];
-  encryptionMode?: EncryptionMode;
-  logLevel?: LogLevel;
+	signer: NostrSigner;
+	relayHandler: RelayHandler | string[];
+	encryptionMode?: EncryptionMode;
+	logLevel?: LogLevel;
 }
 ```
 
@@ -72,8 +72,8 @@ interface BaseNostrTransportOptions {
 
 ```typescript
 interface NostrTransportOptions extends BaseNostrTransportOptions {
-  serverPubkey: string;
-  isStateless?: boolean;
+	serverPubkey: string;
+	isStateless?: boolean;
 }
 ```
 
@@ -81,11 +81,11 @@ interface NostrTransportOptions extends BaseNostrTransportOptions {
 
 ```typescript
 interface NostrServerTransportOptions extends BaseNostrTransportOptions {
-  serverInfo?: ServerInfo;
-  isPublicServer?: boolean;
-  allowedPublicKeys?: string[];
-  excludedCapabilities?: CapabilityExclusion[];
-  injectClientPubkey?: boolean;
+	serverInfo?: ServerInfo;
+	isPublicServer?: boolean;
+	allowedPublicKeys?: string[];
+	excludedCapabilities?: CapabilityExclusion[];
+	injectClientPubkey?: boolean;
 }
 ```
 
@@ -93,7 +93,7 @@ interface NostrServerTransportOptions extends BaseNostrTransportOptions {
 
 ```typescript
 interface CapabilityExclusion {
-  method: string; // e.g., "tools/call"
-  name?: string; // e.g., "specific_tool"
+	method: string; // e.g., "tools/call"
+	name?: string; // e.g., "specific_tool"
 }
 ```

@@ -22,13 +22,15 @@
 
 	// Minimal single-server payment UI state (latest invoice).
 	const paymentEntry = $derived(paymentUi.state);
-	const paymentInvoice = $derived(paymentEntry?.status === 'payment_required' ? paymentEntry.pay_req : null);
+	const paymentInvoice = $derived(
+		paymentEntry?.status === 'payment_required' ? paymentEntry.pay_req : null
+	);
 
 	$effect(() => {
 		// (Re)create client when account changes.
 		// For now we enable Payments UI so invoices are surfaced.
 		if (!$activeAccount) {
-			client?.disconnect().then(() => client = null);
+			client?.disconnect().then(() => (client = null));
 			mintStage = 'idle';
 			return;
 		}
@@ -91,7 +93,6 @@
 	});
 </script>
 
-
 <main class="mx-auto flex min-h-[calc(100vh-3.5rem)] max-w-4xl flex-col gap-10 px-4 pt-24 pb-16">
 	<section class="mx-auto flex w-full max-w-2xl flex-col items-center gap-5 text-center">
 		<img
@@ -106,8 +107,8 @@
 				Lemonade Legends
 			</h1>
 			<p class="text-balance text-muted-foreground">
-				Mint the <span class="font-medium text-foreground">lemonade-legends</span> NIP-58 badge award to your
-				Nostr pubkey via a paid ContextVM capability.
+				Mint the <span class="font-medium text-foreground">lemonade-legends</span> NIP-58 badge award
+				to your Nostr pubkey via a paid ContextVM capability.
 			</p>
 		</div>
 	</section>
@@ -116,21 +117,52 @@
 	<section class="mx-auto w-full max-w-2xl text-center">
 		<div class="space-y-4 text-muted-foreground">
 			<p>
-				Lemonade Legends is a little experiment built for the <a href="https://contextvm.org" target="_blank" rel="noreferrer" class="underline hover:text-foreground">ContextVM</a> ecosystem.
-				It's a playful way to explore how <a href="https://github.com/contextvm/ceps/blob/main/ceps/cep-8.md" target="_blank" rel="noreferrer" class="underline hover:text-foreground">CEP-8 payments</a> work in practice.
+				Lemonade Legends is a little experiment built for the <a
+					href="https://contextvm.org"
+					target="_blank"
+					rel="noreferrer"
+					class="underline hover:text-foreground">ContextVM</a
+				>
+				ecosystem. It's a playful way to explore how
+				<a
+					href="https://github.com/contextvm/ceps/blob/main/ceps/cep-8.md"
+					target="_blank"
+					rel="noreferrer"
+					class="underline hover:text-foreground">CEP-8 payments</a
+				> work in practice.
 			</p>
 			<p>
-				The idea is simple: each badge costs a few sats, and the price ticks up by 21 sats every day.
-				No surprises, no rush—just a steady, predictable curve. Pay with Lightning, get your badge, and join the legends.
+				The idea is simple: each badge costs a few sats, and the price ticks up by 21 sats every
+				day. No surprises, no rush—just a steady, predictable curve. Pay with Lightning, get your
+				badge, and join the legends.
 			</p>
 			<p class="text-sm">
-				Read the full story on the <a href="https://contextvm.org/blog/lemonade-legends" target="_blank" rel="noreferrer" class="underline hover:text-foreground">blog</a>.
-				Everything is open source—check out the <a href="https://github.com/ContextVM/lemonade-legends" target="_blank" rel="noreferrer" class="underline hover:text-foreground">server</a> and <a href="https://github.com/ContextVM/lemonade-legends-site" target="_blank" rel="noreferrer" class="underline hover:text-foreground">this site</a> on GitHub.
+				Read the full story on the <a
+					href="https://contextvm.org/blog/lemonade-legends"
+					target="_blank"
+					rel="noreferrer"
+					class="underline hover:text-foreground">blog</a
+				>. Everything is open source—check out the
+				<a
+					href="https://github.com/ContextVM/lemonade-legends"
+					target="_blank"
+					rel="noreferrer"
+					class="underline hover:text-foreground">server</a
+				>
+				and
+				<a
+					href="https://github.com/ContextVM/lemonade-legends-site"
+					target="_blank"
+					rel="noreferrer"
+					class="underline hover:text-foreground">this site</a
+				> on GitHub.
 			</p>
 		</div>
 	</section>
 
-	<section class="mx-auto w-full max-w-3xl rounded-2xl border border-white/50 bg-card/80 p-6 shadow-sm ring-1 ring-black/5 backdrop-blur">
+	<section
+		class="mx-auto w-full max-w-3xl rounded-2xl border border-white/50 bg-card/80 p-6 shadow-sm ring-1 ring-black/5 backdrop-blur"
+	>
 		<div class="text-center">
 			<h2 class="text-xl font-semibold">Mint your badge</h2>
 			<p class="mt-1 text-sm text-muted-foreground">
@@ -143,13 +175,13 @@
 
 		<div class="mt-5 flex justify-center">
 			{#if mintStage !== 'success'}
-			{#if $activeAccount}
-				<Button onclick={mintBadge} disabled={mintLoading} class="sm:min-w-[240px]">
-					{mintLoading ? 'Minting…' : 'Mint Lemonade Legends Badge'}
-				</Button>
-			{:else}
-				<AccountLoginDialog />
-			{/if}
+				{#if $activeAccount}
+					<Button onclick={mintBadge} disabled={mintLoading} class="sm:min-w-[240px]">
+						{mintLoading ? 'Minting…' : 'Mint Lemonade Legends Badge'}
+					</Button>
+				{:else}
+					<AccountLoginDialog />
+				{/if}
 			{/if}
 		</div>
 
@@ -157,34 +189,51 @@
 			<p class="mt-3 text-center text-sm text-destructive">{mintError}</p>
 		{/if}
 		{#if mintSuccess}
-			<div class="mt-4 mx-auto max-w-md rounded-lg border border-[oklch(0.62_0.16_155)/0.28] bg-[oklch(0.965_0.06_160)/0.35] px-4 py-3 text-center text-sm ring-1 ring-black/5">
+			<div
+				class="mx-auto mt-4 max-w-md rounded-lg border border-[oklch(0.62_0.16_155)/0.28] bg-[oklch(0.965_0.06_160)/0.35] px-4 py-3 text-center text-sm ring-1 ring-black/5"
+			>
 				<p class="font-medium text-[oklch(0.22_0.05_160)]">{mintSuccess}</p>
 				<p class="mt-1 text-[oklch(0.22_0.05_160)/0.8]">
 					View your badge on
-					<a class="underline" href="https://badges.page" target="_blank" rel="noreferrer">badges.page</a>
+					<a class="underline" href="https://badges.page" target="_blank" rel="noreferrer"
+						>badges.page</a
+					>
 					or
-					<a class="underline" href="https://nostrsigil.com" target="_blank" rel="noreferrer">nostrsigil.com</a>
+					<a class="underline" href="https://nostrsigil.com" target="_blank" rel="noreferrer"
+						>nostrsigil.com</a
+					>
 					<span>.</span>
 				</p>
 			</div>
 		{/if}
 		{#if mintResult}
-			<pre class="mt-3 mx-auto max-w-md overflow-auto rounded-md bg-muted p-3 text-xs">{JSON.stringify(mintResult, null, 2)}</pre>
+			<pre
+				class="mx-auto mt-3 max-w-md overflow-auto rounded-md bg-muted p-3 text-xs">{JSON.stringify(
+					mintResult,
+					null,
+					2
+				)}</pre>
 		{/if}
 
 		<!-- Payment UI (invoice) -->
 		{#if paymentInvoice}
-			<div class="mt-6 overflow-hidden rounded-xl border border-white/50 bg-background/70 p-5 ring-1 ring-black/5">
+			<div
+				class="mt-6 overflow-hidden rounded-xl border border-white/50 bg-background/70 p-5 ring-1 ring-black/5"
+			>
 				<div class="text-center">
 					<h3 class="text-base font-semibold">Payment required</h3>
-					<p class="mt-1 text-sm text-muted-foreground">Pay this Lightning invoice to continue minting.</p>
+					<p class="mt-1 text-sm text-muted-foreground">
+						Pay this Lightning invoice to continue minting.
+					</p>
 					{#if paymentEntry?.status === 'payment_required' && paymentEntry.description}
 						<p class="mt-1 text-sm text-muted-foreground">{paymentEntry.description}</p>
 					{/if}
 				</div>
 
 				<div class="mt-5 flex justify-center">
-					<div class="rounded-xl border border-white/50 bg-card/80 p-3 shadow-sm ring-1 ring-black/5">
+					<div
+						class="rounded-xl border border-white/50 bg-card/80 p-3 shadow-sm ring-1 ring-black/5"
+					>
 						<QrCode data={paymentInvoice} size={260} />
 					</div>
 				</div>
@@ -208,14 +257,17 @@
 					</div>
 					<pre class="max-h-44 overflow-auto rounded-md bg-muted p-3 text-xs">{paymentInvoice}</pre>
 					<p class="text-center text-xs text-muted-foreground">
-						After paying, keep this page open while the server confirms payment. You’ll see a success message above.
+						After paying, keep this page open while the server confirms payment. You’ll see a
+						success message above.
 					</p>
 				</div>
 			</div>
 		{/if}
 	</section>
 
-	<section class="mx-auto w-full max-w-4xl rounded-2xl border border-white/50 bg-card/80 p-6 shadow-sm ring-1 ring-black/5 backdrop-blur">
+	<section
+		class="mx-auto w-full max-w-4xl rounded-2xl border border-white/50 bg-card/80 p-6 shadow-sm ring-1 ring-black/5 backdrop-blur"
+	>
 		<div class="flex items-center justify-between gap-4">
 			<div class="flex items-center gap-3">
 				<h2 class="text-xl font-semibold">Legends (already awarded)</h2>
@@ -223,7 +275,13 @@
 					<p class="text-sm text-muted-foreground">{stats.pubkeys.length} total</p>
 				{/if}
 			</div>
-			<Button variant="ghost" size="icon-sm" onclick={loadStats} disabled={statsLoading} title="Refresh stats">
+			<Button
+				variant="ghost"
+				size="icon-sm"
+				onclick={loadStats}
+				disabled={statsLoading}
+				title="Refresh stats"
+			>
 				<RefreshCw class={statsLoading ? 'animate-spin' : ''} size={16} />
 			</Button>
 		</div>
@@ -236,7 +294,9 @@
 		{:else}
 			<ul class="mt-4 grid grid-cols-1 justify-items-center gap-2 sm:grid-cols-2 lg:grid-cols-3">
 				{#each stats.pubkeys as pk (pk)}
-					<li class="w-full max-w-sm rounded-xl border border-white/50 bg-background/70 px-3 py-3 ring-1 ring-black/5">
+					<li
+						class="w-full max-w-sm rounded-xl border border-white/50 bg-background/70 px-3 py-3 ring-1 ring-black/5"
+					>
 						<!-- Reuse ProfileCard, but disable logout in list context -->
 						<ProfileCard pubkey={pk} showLogout={false} size="sm" />
 					</li>

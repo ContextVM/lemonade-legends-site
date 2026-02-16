@@ -18,29 +18,29 @@ MCP Client (stdio) <---> NostrMCPProxy <---> ContextVM Server (Nostr)
 ## Example: Claude Desktop Integration
 
 ```typescript
-import { NostrMCPProxy } from "@contextvm/sdk";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { NostrMCPProxy } from '@contextvm/sdk';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 
 async function main() {
-  const proxy = new NostrMCPProxy({
-    // Host transport - client connects here
-    mcpHostTransport: new StdioServerTransport(),
+	const proxy = new NostrMCPProxy({
+		// Host transport - client connects here
+		mcpHostTransport: new StdioServerTransport(),
 
-    // Remote server configuration
-    nostrTransportOptions: {
-      signer: new PrivateKeySigner(clientKey),
-      relayHandler: new ApplesauceRelayPool(relays),
-      serverPubkey: "remote-server-pubkey",
-    },
-  });
+		// Remote server configuration
+		nostrTransportOptions: {
+			signer: new PrivateKeySigner(clientKey),
+			relayHandler: new ApplesauceRelayPool(relays),
+			serverPubkey: 'remote-server-pubkey'
+		}
+	});
 
-  await proxy.start();
+	await proxy.start();
 
-  // Proxy runs until interrupted
-  process.on("SIGINT", async () => {
-    await proxy.stop();
-    process.exit(0);
-  });
+	// Proxy runs until interrupted
+	process.on('SIGINT', async () => {
+		await proxy.stop();
+		process.exit(0);
+	});
 }
 
 main();
@@ -50,12 +50,12 @@ main();
 
 ```json
 {
-  "mcpServers": {
-    "cvm-bridge": {
-      "command": "bun",
-      "args": ["run", "/path/to/proxy.ts"]
-    }
-  }
+	"mcpServers": {
+		"cvm-bridge": {
+			"command": "bun",
+			"args": ["run", "/path/to/proxy.ts"]
+		}
+	}
 }
 ```
 
@@ -68,11 +68,11 @@ Create a proxy that can route to different servers:
 const targetServer = process.env.TARGET_SERVER_PUBKEY;
 
 const proxy = new NostrMCPProxy({
-  mcpHostTransport: new StdioServerTransport(),
-  nostrTransportOptions: {
-    signer,
-    relayHandler,
-    serverPubkey: targetServer,
-  },
+	mcpHostTransport: new StdioServerTransport(),
+	nostrTransportOptions: {
+		signer,
+		relayHandler,
+		serverPubkey: targetServer
+	}
 });
 ```

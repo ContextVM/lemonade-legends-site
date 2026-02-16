@@ -6,9 +6,9 @@ Direct connection when you know the server's pubkey:
 
 ```typescript
 const transport = new NostrClientTransport({
-  signer,
-  relayHandler: relayPool,
-  serverPubkey: "known-pubkey-hex",
+	signer,
+	relayHandler: relayPool,
+	serverPubkey: 'known-pubkey-hex'
 });
 ```
 
@@ -17,17 +17,17 @@ const transport = new NostrClientTransport({
 Find servers on the network:
 
 ```typescript
-import { SERVER_ANNOUNCEMENT_KIND } from "@contextvm/sdk";
+import { SERVER_ANNOUNCEMENT_KIND } from '@contextvm/sdk';
 
 const servers = new Map();
 
 await relayPool.subscribe([{ kinds: [SERVER_ANNOUNCEMENT_KIND] }], (event) => {
-  const info = JSON.parse(event.content);
-  servers.set(event.pubkey, {
-    pubkey: event.pubkey,
-    name: info.serverInfo?.name,
-    capabilities: info.capabilities,
-  });
+	const info = JSON.parse(event.content);
+	servers.set(event.pubkey, {
+		pubkey: event.pubkey,
+		name: info.serverInfo?.name,
+		capabilities: info.capabilities
+	});
 });
 ```
 
@@ -37,17 +37,15 @@ Find servers supporting specific features:
 
 ```typescript
 await relayPool.subscribe([{ kinds: [SERVER_ANNOUNCEMENT_KIND] }], (event) => {
-  const info = JSON.parse(event.content);
+	const info = JSON.parse(event.content);
 
-  // Check for tools support
-  if (info.capabilities?.tools) {
-    console.log(`Server with tools: ${info.serverInfo.name}`);
-  }
+	// Check for tools support
+	if (info.capabilities?.tools) {
+		console.log(`Server with tools: ${info.serverInfo.name}`);
+	}
 
-  // Check for encryption support
-  const supportsEncryption = event.tags.some(
-    (t) => t[0] === "support_encryption",
-  );
+	// Check for encryption support
+	const supportsEncryption = event.tags.some((t) => t[0] === 'support_encryption');
 });
 ```
 
@@ -56,11 +54,7 @@ await relayPool.subscribe([{ kinds: [SERVER_ANNOUNCEMENT_KIND] }], (event) => {
 Query multiple relays for redundancy:
 
 ```typescript
-const relayUrls = [
-  "wss://relay.contextvm.org",
-  "wss://cvm.otherstuff.ai",
-  "wss://nos.lol",
-];
+const relayUrls = ['wss://relay.contextvm.org', 'wss://cvm.otherstuff.ai', 'wss://nos.lol'];
 
 const relayPool = new ApplesauceRelayPool(relayUrls);
 ```

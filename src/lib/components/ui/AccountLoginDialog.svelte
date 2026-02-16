@@ -8,9 +8,7 @@
 		SimpleAccount,
 		ExtensionAccount,
 		NostrConnectAccount,
-
 		PrivateKeyAccount
-
 	} from 'applesauce-accounts/accounts';
 	import { generateSecretKey } from 'nostr-tools';
 	import { bytesToHex } from 'nostr-tools/utils';

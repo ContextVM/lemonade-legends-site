@@ -19,9 +19,9 @@ This rail is an alternative to NWC and is useful when you operate LNbits directl
 import { LnBolt11LnbitsPaymentProcessor } from '@contextvm/sdk/payments';
 
 const processor = new LnBolt11LnbitsPaymentProcessor({
-  lnbitsUrl: process.env.LNBITS_URL!,
-  lnbitsApiKey: process.env.LNBITS_INVOICE_KEY!,
-  // lnbitsBasicAuth: 'user:password', // optional for proxied instances
+	lnbitsUrl: process.env.LNBITS_URL!,
+	lnbitsApiKey: process.env.LNBITS_INVOICE_KEY!
+	// lnbitsBasicAuth: 'user:password', // optional for proxied instances
 });
 ```
 
@@ -36,9 +36,9 @@ Notes:
 import { LnBolt11LnbitsPaymentHandler } from '@contextvm/sdk/payments';
 
 const handler = new LnBolt11LnbitsPaymentHandler({
-  lnbitsUrl: process.env.LNBITS_URL!,
-  lnbitsAdminKey: process.env.LNBITS_ADMIN_KEY!,
-  // lnbitsBasicAuth: 'user:password',
+	lnbitsUrl: process.env.LNBITS_URL!,
+	lnbitsAdminKey: process.env.LNBITS_ADMIN_KEY!
+	// lnbitsBasicAuth: 'user:password',
 });
 ```
 
@@ -51,4 +51,3 @@ Notes:
 - Treat LNbits keys as secrets.
 - Use separate wallets/permissions for server and client roles.
 - If verification or relay propagation is slow, tune TTL/polling on the processor.
-

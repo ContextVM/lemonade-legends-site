@@ -1,6 +1,6 @@
 <script lang="ts">
 	import './layout.css';
-   	import { ModeWatcher } from "mode-watcher";
+	import { ModeWatcher } from 'mode-watcher';
 	import Header from '$lib/header.svelte';
 	let { children } = $props();
 </script>
@@ -9,7 +9,7 @@
 	<link rel="icon" type="image/png" href="/icon.png" />
 	<title>Lemonade Legends</title>
 </svelte:head>
-<ModeWatcher />
+<ModeWatcher defaultMode="light" />
 <Header />
 
 {@render children()}

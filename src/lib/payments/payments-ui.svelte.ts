@@ -6,16 +6,14 @@ import type { PaymentHandler, PaymentHandlerRequest } from '@contextvm/sdk/payme
  * This site only needs to surface the latest `payment_required` invoice so the
  * user can pay externally (wallet/QR).
  */
-export type PaymentUiState =
-	| {
-			status: 'payment_required';
-			requestEventId: string;
-			amount: number;
-			pay_req: string;
-			description?: string;
-			timestamp: number;
-	  }
-	| null;
+export type PaymentUiState = {
+	status: 'payment_required';
+	requestEventId: string;
+	amount: number;
+	pay_req: string;
+	description?: string;
+	timestamp: number;
+} | null;
 
 class PaymentUiStore {
 	state = $state<PaymentUiState>(null);
@@ -61,4 +59,3 @@ export function createUiOnlyPaymentHandler(): PaymentHandler {
 		}
 	};
 }
-

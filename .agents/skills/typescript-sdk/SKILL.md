@@ -19,24 +19,24 @@ bun add @contextvm/sdk
 
 ```typescript
 // Transports
-import { NostrClientTransport, NostrServerTransport } from "@contextvm/sdk";
+import { NostrClientTransport, NostrServerTransport } from '@contextvm/sdk';
 
 // Signers
-import { PrivateKeySigner } from "@contextvm/sdk";
+import { PrivateKeySigner } from '@contextvm/sdk';
 
 // Relay Handlers
-import { ApplesauceRelayPool } from "@contextvm/sdk";
+import { ApplesauceRelayPool } from '@contextvm/sdk';
 
 // Components
-import { NostrMCPProxy, NostrMCPGateway } from "@contextvm/sdk";
+import { NostrMCPProxy, NostrMCPGateway } from '@contextvm/sdk';
 
 // Core types and utilities
 import {
-  EncryptionMode,
-  CTXVM_MESSAGES_KIND,
-  SERVER_ANNOUNCEMENT_KIND,
-  createLogger,
-} from "@contextvm/sdk";
+	EncryptionMode,
+	CTXVM_MESSAGES_KIND,
+	SERVER_ANNOUNCEMENT_KIND,
+	createLogger
+} from '@contextvm/sdk';
 ```
 
 ## Core Interfaces
@@ -47,12 +47,12 @@ Abstracts cryptographic signing:
 
 ```typescript
 interface NostrSigner {
-  getPublicKey(): Promise<string>;
-  signEvent(event: EventTemplate): Promise<NostrEvent>;
-  nip44?: {
-    encrypt(pubkey: string, plaintext: string): Promise<string>;
-    decrypt(pubkey: string, ciphertext: string): Promise<string>;
-  };
+	getPublicKey(): Promise<string>;
+	signEvent(event: EventTemplate): Promise<NostrEvent>;
+	nip44?: {
+		encrypt(pubkey: string, plaintext: string): Promise<string>;
+		decrypt(pubkey: string, ciphertext: string): Promise<string>;
+	};
 }
 ```
 
@@ -64,15 +64,15 @@ Manages relay connections:
 
 ```typescript
 interface RelayHandler {
-  connect(): Promise<void>;
-  disconnect(relayUrls?: string[]): Promise<void>;
-  publish(event: NostrEvent): Promise<void>;
-  subscribe(
-    filters: Filter[],
-    onEvent: (event: NostrEvent) => void,
-    onEose?: () => void,
-  ): Promise<void>;
-  unsubscribe(): void;
+	connect(): Promise<void>;
+	disconnect(relayUrls?: string[]): Promise<void>;
+	publish(event: NostrEvent): Promise<void>;
+	subscribe(
+		filters: Filter[],
+		onEvent: (event: NostrEvent) => void,
+		onEose?: () => void
+	): Promise<void>;
+	unsubscribe(): void;
 }
 ```
 
@@ -85,7 +85,7 @@ interface RelayHandler {
 Default signer using raw private key:
 
 ```typescript
-const signer = new PrivateKeySigner("32-byte-hex-private-key");
+const signer = new PrivateKeySigner('32-byte-hex-private-key');
 const pubkey = await signer.getPublicKey();
 ```
 
@@ -109,10 +109,7 @@ See [`references/custom-signers.md`](references/custom-signers.md) for examples.
 Production-grade relay management:
 
 ```typescript
-const pool = new ApplesauceRelayPool([
-  "wss://relay.contextvm.org",
-  "wss://cvm.otherstuff.ai",
-]);
+const pool = new ApplesauceRelayPool(['wss://relay.contextvm.org', 'wss://cvm.otherstuff.ai']);
 ```
 
 Features:
@@ -136,23 +133,23 @@ Use `ApplesauceRelayPool` for new projects.
 
 ```typescript
 enum EncryptionMode {
-  OPTIONAL = "optional", // Use if supported (default)
-  REQUIRED = "required", // Fail if not supported
-  DISABLED = "disabled", // Never encrypt
+	OPTIONAL = 'optional', // Use if supported (default)
+	REQUIRED = 'required', // Fail if not supported
+	DISABLED = 'disabled' // Never encrypt
 }
 ```
 
 ## Logging
 
 ```typescript
-import { createLogger } from "@contextvm/sdk/core";
+import { createLogger } from '@contextvm/sdk/core';
 
-const logger = createLogger("my-module");
+const logger = createLogger('my-module');
 
-logger.info("event.name", {
-  module: "my-module",
-  txId: "abc-123",
-  durationMs: 245,
+logger.info('event.name', {
+	module: 'my-module',
+	txId: 'abc-123',
+	durationMs: 245
 });
 ```
 
