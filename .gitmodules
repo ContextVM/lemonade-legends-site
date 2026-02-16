@@ -1,3 +1,6 @@
 [submodule "sdk"]
 	path = sdk
 	url = https://github.com/ContextVM/sdk
+[submodule "lemonade-legends"]
+	path = lemonade-legends
+	url = https://github.com/ContextVM/lemonade-legends
