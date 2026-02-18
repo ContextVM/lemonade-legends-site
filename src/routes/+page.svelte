@@ -5,8 +5,10 @@
 	import { activeAccount } from '$lib/accountManager.svelte';
 	import { paymentUi } from '$lib/payments/payments-ui.svelte';
 	import ProfileCard from '$lib/ProfileCard.svelte';
+	import { cvmRelayHandler } from '$lib/cvm-relay-handler';
 	import { LemonadeLegendsClient } from '../ctxcn/LemonadeLegendsClient';
 	import { onMount } from 'svelte';
+	import { untrack } from 'svelte';
 	import { RefreshCw } from 'lucide-svelte';
 
 	let client = $state<LemonadeLegendsClient | null>(null);
@@ -20,6 +22,14 @@
 	let mintSuccess = $state('');
 	let mintStage = $state<'idle' | 'minting' | 'payment_required' | 'success' | 'error'>('idle');
 
+	// Shared client for read-only calls (e.g. stats) when not logged in.
+	// Avoid constructing a new client per refresh.
+	const publicClient = new LemonadeLegendsClient({
+		enablePaymentsUi: true,
+		relayHandler: cvmRelayHandler
+	});
+	publicClient.connect().catch((e) => console.error('Failed to connect public client', e));
+
 	// Minimal single-server payment UI state (latest invoice).
 	const paymentEntry = $derived(paymentUi.state);
 	const paymentInvoice = $derived(
@@ -28,24 +38,48 @@
 
 	$effect(() => {
 		// (Re)create client when account changes.
-		// For now we enable Payments UI so invoices are surfaced.
+		// Use effect cleanup + a generation guard so disconnect/connect races don't
+		// leak a stale client or update state out of order.
+		let disposed = false;
+		const previousClient = untrack(() => client);
+		mintStage = 'idle';
+
 		if (!$activeAccount) {
-			client?.disconnect().then(() => (client = null));
-			mintStage = 'idle';
-			return;
+			client = null;
+			if (previousClient) previousClient.disconnect();
+			return () => {
+				disposed = true;
+			};
 		}
 
-		client = new LemonadeLegendsClient({
+		const nextClient = new LemonadeLegendsClient({
 			signer: $activeAccount.signer,
-			enablePaymentsUi: true
+			enablePaymentsUi: true,
+			relayHandler: cvmRelayHandler
 		});
+
+		// Disconnect the previous client after creating the new one so we reduce
+		// downtime during account switching.
+		if (previousClient) previousClient.disconnect();
+
+		nextClient.connect().catch((e) => {
+			if (disposed) return;
+			console.error('Failed to connect LemonadeLegendsClient', e);
+		});
+
+		client = nextClient;
+
+		return () => {
+			disposed = true;
+			nextClient.disconnect();
+		};
 	});
 
 	async function loadStats() {
 		try {
 			statsLoading = true;
 			statsError = '';
-			const c = client ?? new LemonadeLegendsClient({ enablePaymentsUi: true });
+			const c = client ?? publicClient;
 			stats = await c.Stats({});
 		} catch (e) {
 			statsError = e instanceof Error ? e.message : 'Failed to load stats';
@@ -125,7 +159,7 @@
 				>
 				ecosystem. It's a playful way to explore how
 				<a
-					href="https://github.com/contextvm/ceps/blob/main/ceps/cep-8.md"
+					href="https://docs.contextvm.org/spec/ceps/cep-8/"
 					target="_blank"
 					rel="noreferrer"
 					class="underline hover:text-foreground">CEP-8 payments</a

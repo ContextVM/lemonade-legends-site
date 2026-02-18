@@ -33,6 +33,10 @@ export class LemonadeLegendsClient implements LemonadeLegends {
 	static readonly DEFAULT_RELAYS = defaultRelays;
 	private client: Client;
 	private transport: Transport;
+	private connectPromise: Promise<void> | null = null;
+	private disconnectPromise: Promise<void> | null = null;
+	private connected = false;
+	private closed = false;
 
 	constructor(
 		options: Partial<NostrTransportOptions> & {
@@ -79,18 +83,57 @@ export class LemonadeLegendsClient implements LemonadeLegends {
 					handlers: [createUiOnlyPaymentHandler()]
 				})
 			: baseTransport;
-
-		// Auto-connect in constructor
-		this.client.connect(this.transport).catch((error) => {
-			console.error(`Failed to connect to server: ${error}`);
-		});
 	}
 
+	/**
+	 * Connects the underlying MCP client to the configured transport.
+	 *
+	 * This method is idempotent: repeated calls return the same promise.
+	 */
+	async connect(): Promise<void> {
+		if (this.closed) throw new Error('Client is closed');
+		if (this.connected) return;
+		if (this.connectPromise) return this.connectPromise;
+
+		this.connectPromise = this.client
+			.connect(this.transport)
+			.then(() => {
+				this.connected = true;
+			})
+			.catch((error) => {
+				// Reset so a later retry attempt is possible.
+				this.connectPromise = null;
+				throw error;
+			});
+
+		return this.connectPromise;
+	}
+
+	/**
+	 * Closes the transport.
+	 *
+	 * This method is idempotent; concurrent calls are coalesced.
+	 */
 	async disconnect(): Promise<void> {
-		await this.transport.close();
+		if (this.disconnectPromise) return this.disconnectPromise;
+		this.closed = true;
+
+		this.disconnectPromise = this.transport
+			.close()
+			.catch((error) => {
+				// Swallow close errors to keep cleanup paths safe.
+				console.warn('Failed to close transport', error);
+			})
+			.finally(() => {
+				this.connected = false;
+				this.connectPromise = null;
+			});
+
+		return this.disconnectPromise;
 	}
 
 	private async call<T = unknown>(name: string, args: Record<string, unknown>): Promise<T> {
+		await this.connect();
 		const result = await this.client.callTool({
 			name,
 			arguments: { ...args }
