@@ -4,7 +4,8 @@ import {
 	NostrClientTransport,
 	type NostrTransportOptions,
 	PrivateKeySigner,
-	ApplesauceRelayPool
+	ApplesauceRelayPool,
+	EncryptionMode
 } from '@contextvm/sdk';
 import { withClientPayments } from '@contextvm/sdk/payments';
 import { createUiOnlyPaymentHandler } from '$lib/payments/payments-ui.svelte';
@@ -51,7 +52,7 @@ export class LemonadeLegendsClient implements LemonadeLegends {
 	) {
 		this.client = new Client({
 			name: 'LemonadeLegendsClient',
-			version: '1.0.0'
+			version: '1.0.0',
 		});
 
 		// Private key precedence: constructor options > config file
@@ -73,6 +74,7 @@ export class LemonadeLegendsClient implements LemonadeLegends {
 			signer,
 			relayHandler,
 			isStateless: true,
+			encryptionMode: EncryptionMode.DISABLED,
 			...rest
 		});
 
@@ -136,7 +138,10 @@ export class LemonadeLegendsClient implements LemonadeLegends {
 		await this.connect();
 		const result = await this.client.callTool({
 			name,
-			arguments: { ...args }
+			arguments: { ...args},
+		}, undefined, {
+			onprogress: () => {},
+			resetTimeoutOnProgress: true,
 		});
 		return result.structuredContent as T;
 	}
