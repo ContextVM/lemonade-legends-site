@@ -74,7 +74,6 @@ export class LemonadeLegendsClient implements LemonadeLegends {
 			signer,
 			relayHandler,
 			isStateless: true,
-			encryptionMode: EncryptionMode.DISABLED,
 			...rest
 		});
 
